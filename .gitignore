@@ -1,0 +1,18 @@
+# Maven build files
+target/
+
+#IntelliJ IDEA
+.idea/
+*.iml
+
+
+#java Compiled files
+*.class
+
+#Log files
+*.yarn.lock
+#macOS
+.DS_Store
+
+#Environmnt varibles and secrets
+.env
