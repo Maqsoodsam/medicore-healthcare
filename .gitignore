@@ -1,18 +1,36 @@
-# Maven build files
+HELP.md
 target/
+.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
 
-#IntelliJ IDEA
-.idea/
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
 *.iml
-
-
-#java Compiled files
-*.class
-
-#Log files
-*.yarn.lock
-#macOS
+*.ipr
+*.class*.log
 .DS_Store
-
-#Environmnt varibles and secrets
 .env
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### VS Code ###
+.vscode/
