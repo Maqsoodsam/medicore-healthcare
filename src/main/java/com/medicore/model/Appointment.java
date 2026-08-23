@@ -1,18 +1,34 @@
 package com.medicore.model;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 public class Appointment {
 
     private Long id;
+
+    @NotNull(message = "Patient ID is required")
     private Long patientId;
+
+    @NotNull(message = "Doctor ID is required")
     private Long doctorId;
+
+    @NotBlank(message = "Appointment date is required")
     private String appointmentDate;
+
+    @NotBlank(message = "Appointment status is required")
     private String status;
 
     public Appointment() {
     }
 
-    public Appointment(Long id, Long patientId, Long doctorId,
-                       String appointmentDate, String status) {
+    public Appointment(
+            Long id,
+            Long patientId,
+            Long doctorId,
+            String appointmentDate,
+            String status) {
+
         this.id = id;
         this.patientId = patientId;
         this.doctorId = doctorId;

@@ -1,15 +1,31 @@
 package com.medicore.model;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+
 public class Doctor {
 
     private Long id;
+
+    @NotBlank(message = "Doctor name is required")
+    @Size(
+            min = 2,
+            max = 100,
+            message = "Doctor name must contain between 2 and 100 characters"
+    )
     private String name;
+
+    @NotBlank(message = "Specialisation is required")
     private String specialisation;
 
     public Doctor() {
     }
 
-    public Doctor(Long id, String name, String specialisation) {
+    public Doctor(
+            Long id,
+            String name,
+            String specialisation) {
+
         this.id = id;
         this.name = name;
         this.specialisation = specialisation;

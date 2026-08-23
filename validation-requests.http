@@ -1,0 +1,41 @@
+### Valid Patient
+POST http://localhost:8080/patients
+Content-Type: application/json
+
+{
+  "name": "Sara Ahmed",
+  "email": "sara@example.com",
+  "phoneNumber": "0412345678"
+}
+
+### Invalid Patient
+POST http://localhost:8080/patients
+Content-Type: application/json
+
+{
+  "name": "",
+  "email": "wrong-email",
+  "phoneNumber": ""
+}
+
+### Valid Appointment
+POST http://localhost:8080/appointments
+Content-Type: application/json
+
+{
+  "patientId": 1,
+  "doctorId": 2,
+  "appointmentDate": "2026-08-30 10:00",
+  "status": "BOOKED"
+}
+
+### Invalid Appointment
+POST http://localhost:8080/appointments
+Content-Type: application/json
+
+{
+  "patientId": null,
+  "doctorId": null,
+  "appointmentDate": "",
+  "status": ""
+}
