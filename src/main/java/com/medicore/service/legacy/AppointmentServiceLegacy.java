@@ -11,13 +11,12 @@ public class AppointmentServiceLegacy {
         if (appointment == null) {
             return "Appointment is invalid";
         }
-
-        if (appointment.getPatientId() == null) {
-            return "Patient ID is required";
+        if (appointment.getPatient() == null) {
+            return "Patient is required";
         }
 
-        if (appointment.getDoctorId() == null) {
-            return "Doctor ID is required";
+        if (appointment.getDoctor() == null) {
+            return "Doctor is required";
         }
 
         if (appointment.getStatus() == null || appointment.getStatus().isEmpty()) {

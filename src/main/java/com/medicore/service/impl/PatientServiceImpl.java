@@ -1,64 +1,75 @@
 package com.medicore.service.impl;
 
-import com.medicore.model.Patient;
-import com.medicore.service.PatientService;
-import org.springframework.stereotype.Service;
-
 import com.medicore.exception.PatientNotFoundException;
+import com.medicore.model.Patient;
+import com.medicore.repository.PatientRepository;
+import com.medicore.service.PatientService;
 
-import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class PatientServiceImpl implements PatientService {
 
-    private static final Logger logger = LoggerFactory.getLogger(PatientServiceImpl.class);
+    private static final Logger logger =
+            LoggerFactory.getLogger(PatientServiceImpl.class);
 
-    public static Logger getLogger() {
-        return logger;
+    private final PatientRepository patientRepository;
+
+    public PatientServiceImpl(
+            PatientRepository patientRepository) {
+
+        this.patientRepository = patientRepository;
     }
 
     @Override
     public Patient registerPatient(Patient patient) {
-        System.out.println("Patient registered: " + patient.getName());
-        logger.info( "Registering patient with email={}", patient.getEmail());
-        return patient;
+
+        logger.info(
+                "Registering patient with email={}",
+                patient.getEmail());
+
+        return patientRepository.save(patient);
     }
 
     @Override
-    public Patient updatePatient(Long id, Patient patient) {
-        System.out.println("Patient updated: " + id);
-        patient.setId(id);
-        return patient;
-    }
+    public Patient updatePatient(
+            Long id, Patient patient) {
 
-    @Override public Patient findPatientById(Long id) {
-        if (id == null || id <= 0) {
-            logger.warn( "Patient lookup failed for id={}", id);
-            throw new PatientNotFoundException( "Patient not found with ID: " + id );
-        }
-        return new Patient( id, "Sample Patient", "patient@example.com", "0412345678" );
+        Patient existingPatient =
+                patientRepository.findById(id)
+                        .orElseThrow(() ->
+                                new PatientNotFoundException(
+                                        "Patient not found with ID: " + id));
+
+        existingPatient.setName(patient.getName());
+        existingPatient.setEmail(patient.getEmail());
+        existingPatient.setPhoneNumber(
+                patient.getPhoneNumber());
+
+        return patientRepository.save(existingPatient);
     }
 
     @Override
-    public List<Patient> getAllPatient() {
-        return List.of(
-                new Patient(
-                        1L,
-                        "Ali Khan",
-                        "ali@example.com",
-                        "0412345678"
-                ),
-                new Patient(
-                        2L,
-                        "Sara Ahmed",
-                        "sara@example.com",
-                        "0498765432"
-                )
-        );
+    public Patient findPatientById(Long id) {
+
+        return patientRepository.findById(id)
+                .orElseThrow(() -> {
+
+                    logger.warn(
+                            "Patient lookup failed for id={}",
+                            id);
+
+                    return new PatientNotFoundException(
+                            "Patient not found with ID: " + id);
+                });
     }
 
-
-
+    @Override
+    public List<Patient> getAllPatients() {
+        return patientRepository.findAll();
+    }
 }

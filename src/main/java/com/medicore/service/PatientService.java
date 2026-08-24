@@ -6,7 +6,7 @@ public interface PatientService {
     Patient registerPatient(Patient patient);
     Patient updatePatient (Long id, Patient patient);
     Patient findPatientById(Long id);
-    List<Patient> getAllPatient();
+    List<Patient> getAllPatients();
 
 
 }

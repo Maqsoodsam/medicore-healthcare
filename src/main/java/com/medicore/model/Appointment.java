@@ -1,37 +1,55 @@
 package com.medicore.model;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
+@Entity
+@Table(name = "appointments")
 public class Appointment {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull(message = "Patient ID is required")
-    private Long patientId;
+    @NotNull(message = "Patient is required")
+    @ManyToOne
+    @JoinColumn(name = "patient_id", nullable = false)
+    private Patient patient;
 
-    @NotNull(message = "Doctor ID is required")
-    private Long doctorId;
+    @NotNull(message = "Doctor is required")
+    @ManyToOne
+    @JoinColumn(name = "doctor_id", nullable = false)
+    private Doctor doctor;
 
     @NotBlank(message = "Appointment date is required")
+    @Column(nullable = false)
     private String appointmentDate;
 
     @NotBlank(message = "Appointment status is required")
+    @Column(nullable = false)
     private String status;
 
     public Appointment() {
     }
 
-    public Appointment(
-            Long id,
-            Long patientId,
-            Long doctorId,
-            String appointmentDate,
-            String status) {
+    public Appointment(Long id,
+                       Patient patient,
+                       Doctor doctor,
+                       String appointmentDate,
+                       String status) {
 
         this.id = id;
-        this.patientId = patientId;
-        this.doctorId = doctorId;
+        this.patient = patient;
+        this.doctor = doctor;
         this.appointmentDate = appointmentDate;
         this.status = status;
     }
@@ -44,20 +62,20 @@ public class Appointment {
         this.id = id;
     }
 
-    public Long getPatientId() {
-        return patientId;
+    public Patient getPatient() {
+        return patient;
     }
 
-    public void setPatientId(Long patientId) {
-        this.patientId = patientId;
+    public void setPatient(Patient patient) {
+        this.patient = patient;
     }
 
-    public Long getDoctorId() {
-        return doctorId;
+    public Doctor getDoctor() {
+        return doctor;
     }
 
-    public void setDoctorId(Long doctorId) {
-        this.doctorId = doctorId;
+    public void setDoctor(Doctor doctor) {
+        this.doctor = doctor;
     }
 
     public String getAppointmentDate() {
